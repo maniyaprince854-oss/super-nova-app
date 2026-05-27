@@ -1,0 +1,113 @@
+/* ══════════════════════════════
+   SyncToast — new material alert
+══════════════════════════════ */
+.sync-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-90px);
+  z-index: 500;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px 13px 14px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 2px 10px rgba(124,58,237,0.12);
+  border: 1.5px solid rgba(124,58,237,0.15);
+
+  max-width: 380px;
+  width: calc(100vw - 2rem);
+
+  transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
+  opacity: 0;
+}
+
+.sync-toast--in  { transform: translateX(-50%) translateY(0); opacity: 1; }
+.sync-toast--out { transform: translateX(-50%) translateY(-90px); opacity: 0; }
+
+/* ── Icon bubble ── */
+.sync-toast-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+/* ── Text ── */
+.sync-toast-body { flex: 1; min-width: 0; }
+
+.sync-toast-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #7c3aed;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0 0 2px;
+}
+
+.sync-toast-sub {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #1e1b4b;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sync-toast-sub strong { font-weight: 800; }
+
+/* ── Close ── */
+.sync-toast-close {
+  background: none;
+  border: none;
+  color: #a1a1aa;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+.sync-toast-close:hover { color: #1e1b4b; background: #f4f4f5; }
+
+/* ── Pulse bar at bottom (countdown) ── */
+.sync-toast::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, #7c3aed, #fbbf24);
+  border-radius: 0 0 18px 18px;
+  animation: toastBar 6s linear forwards;
+}
+
+@keyframes toastBar {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+/* ── Tablet / iPad: top-right corner ── */
+@media (min-width: 768px) {
+  .sync-toast {
+    top: 80px;
+    left: unset;
+    right: 20px;
+    transform: translateX(0) translateY(-40px);
+    max-width: 340px;
+    width: auto;
+  }
+  .sync-toast--in  { transform: translateX(0) translateY(0); }
+  .sync-toast--out { transform: translateX(0) translateY(-40px); }
+}

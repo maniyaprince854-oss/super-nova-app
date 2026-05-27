@@ -16,7 +16,12 @@ import { recordStudyDay } from "../../database/streaks";
 import { getUpcomingLiveClasses } from "../../database/liveClasses";
 import { getPersonalNote, savePersonalNote } from "../../database/personalNotes";
 import { PlayCircleIcon, FileTextIcon, BookOpenIcon, ChevronRightIcon, SearchIcon } from "../../components/Icons";
+import { getSocket } from "../../lib/socket";
+import NetworkStatus from "../../components/NetworkStatus";
+import SyncToast from "../../components/SyncToast";
 import "./Study.css";
+
+const STUDY_KEY = "nova_study_materials";
 
 const SUBJECT_COLORS = {
   "Math":           { bg: "#ede9fe", fg: "#6d28d9", accent: "#8b5cf6", icon: "📐" },
@@ -255,6 +260,7 @@ export default function StudentStudy() {
   const [activeFilter, setActiveFilter]     = useState("all");
   const [liveClasses, setLiveClasses]       = useState([]);
   const [scheduledItems, setScheduledItems] = useState([]);
+  const [syncToast, setSyncToast]           = useState(null);
 
   const reload = useCallback((s) => {
     const all = getPublishedMaterials();
@@ -284,6 +290,52 @@ export default function StudentStudy() {
     reload(s);
     setStreakData(recordStudyDay(s.id));
   }, [navigate, reload]);
+
+  /* ── Live sync: receive new materials from admin ── */
+  useEffect(() => {
+    const socket = getSocket('student', 'Student');
+
+    function onMaterialAdded(material) {
+      // Persist to localStorage so it survives refresh
+      try {
+        const all = JSON.parse(localStorage.getItem(STUDY_KEY) || '[]');
+        if (!all.find((m) => m.id === material.id)) {
+          all.unshift(material);
+          localStorage.setItem(STUDY_KEY, JSON.stringify(all));
+        }
+      } catch {}
+      // Show toast, reload UI
+      setSyncToast(material);
+      setStudent((s) => { if (s) reload(s); return s; });
+    }
+
+    function onMaterialUpdated(material) {
+      try {
+        const all = JSON.parse(localStorage.getItem(STUDY_KEY) || '[]');
+        const idx = all.findIndex((m) => m.id === material.id);
+        if (idx !== -1) { all[idx] = material; localStorage.setItem(STUDY_KEY, JSON.stringify(all)); }
+      } catch {}
+      setStudent((s) => { if (s) reload(s); return s; });
+    }
+
+    function onMaterialDeleted({ id }) {
+      try {
+        const all = JSON.parse(localStorage.getItem(STUDY_KEY) || '[]');
+        localStorage.setItem(STUDY_KEY, JSON.stringify(all.filter((m) => m.id !== id)));
+      } catch {}
+      setStudent((s) => { if (s) reload(s); return s; });
+    }
+
+    socket.on('material:added',   onMaterialAdded);
+    socket.on('material:updated', onMaterialUpdated);
+    socket.on('material:deleted', onMaterialDeleted);
+
+    return () => {
+      socket.off('material:added',   onMaterialAdded);
+      socket.off('material:updated', onMaterialUpdated);
+      socket.off('material:deleted', onMaterialDeleted);
+    };
+  }, [reload]);
 
   if (!student) return null;
 
@@ -419,6 +471,7 @@ export default function StudentStudy() {
   return (
     <div className="student-layout">
       <Header subtitle={`Class ${student.class} · Study Materials`} />
+      <SyncToast material={syncToast} onClose={() => setSyncToast(null)} />
       <main className="study-student-main">
 
         {/* Top bar */}
