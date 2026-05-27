@@ -17,8 +17,7 @@ import {
 } from "../../database/liveClasses";
 import { storeFile, deleteStoredFile, formatFileSize, getFileBlobUrl } from "../../database/fileStore";
 import { BookOpenIcon, PlayCircleIcon, FileTextIcon, UploadIcon, SearchIcon, NotesIcon } from "../../components/Icons";
-import NetworkStatus from "../../components/NetworkStatus";
-import { syncMaterialToServer, deleteMaterialFromServer, syncNoteToServer, deleteNoteFromServer } from "../../lib/api";
+
 import "./StudyMaterials.css";
 
 /* ─────────────── shared helpers ─────────────── */
@@ -182,10 +181,9 @@ export default function AdminStudyMaterials() {
     delete payload.timestampsStr;
     const saved = editLecId ? updateLecture(editLecId, payload) : addLecture(payload);
     reloadLectures(); closeLecForm();
-    if (saved) syncMaterialToServer(saved);
   }
 
-  function handleDeleteLec(id) { deleteLecture(id); setLecDelConfirm(null); reloadLectures(); deleteMaterialFromServer(id); }
+  function handleDeleteLec(id) { deleteLecture(id); setLecDelConfirm(null); reloadLectures(); }
 
   function handleReorder(idA, idB) { swapLectureOrder(idA, idB); reloadLectures(); }
 
@@ -298,7 +296,6 @@ export default function AdminStudyMaterials() {
 
       const savedNote = editNoteId ? updateNote(editNoteId, payload) : addNote(payload);
       reloadNotes(); closeNoteForm();
-      if (savedNote) syncNoteToServer(savedNote);
     } finally {
       setUploading(false);
     }
@@ -308,7 +305,6 @@ export default function AdminStudyMaterials() {
     const note = notes.find((n) => n.id === id);
     if (note?.fileId) await deleteStoredFile(note.fileId);
     deleteNote(id); setNoteDelConfirm(null); reloadNotes();
-    deleteNoteFromServer(id);
   }
 
   const filteredNotes = notes
@@ -387,9 +383,6 @@ export default function AdminStudyMaterials() {
         <main className="admin-main">
 
           {/* ── Sync status bar ── */}
-          <div className="sm-sync-bar">
-            <NetworkStatus role="admin" />
-          </div>
 
           {/* ── Tab bar ── */}
           <div className="sm-tab-bar">
