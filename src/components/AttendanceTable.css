@@ -1,0 +1,85 @@
+.att-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.att-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.att-table thead th {
+  padding: 12px 18px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #71717a;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  background: #f5f3ff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.att-row td {
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.2s ease;
+}
+
+.att-row:last-child td {
+  border-bottom: none;
+}
+
+.att-row:hover td {
+  background: #f4f4f5;
+}
+
+.att-date {
+  font-size: 0.88rem;
+  color: #52525b;
+  font-weight: 500;
+}
+
+.att-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+}
+
+.att-badge--present {
+  background: rgba(52, 211, 153, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.att-badge--absent {
+  background: rgba(248, 113, 113, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.att-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #a1a1aa;
+  gap: 0.5rem;
+}
+
+.att-empty-icon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.att-empty p {
+  font-size: 0.85rem;
+  margin: 0;
+}

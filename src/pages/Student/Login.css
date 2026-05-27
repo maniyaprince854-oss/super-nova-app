@@ -1,0 +1,4 @@
+/* Login shares auth layout with Register */
+/* All shared styles (auth-page, auth-card, form-*, etc.) live in Register.css */
+/* This file only needs to be imported by Login.jsx */
+@import url("./Register.css");

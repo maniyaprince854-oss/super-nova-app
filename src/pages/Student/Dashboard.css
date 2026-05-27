@@ -1,0 +1,428 @@
+/* ══════════════════════════
+   Student Dashboard
+══════════════════════════ */
+.student-layout {
+  min-height: 100vh;
+  background: var(--bg, #f0ecfc);
+}
+
+.student-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 6.5rem;
+}
+
+/* ── Welcome banner ── */
+.student-greeting {
+  margin-bottom: 1.25rem;
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.student-greeting-top {
+  background: linear-gradient(135deg, #1e0a3c 0%, #3b0764 50%, #581c87 100%);
+  border-radius: 24px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(88,28,135,0.4);
+  min-height: 130px;
+}
+
+/* Ambient gold glow */
+.student-greeting-top::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: 100px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(251,191,36,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* Bottom-left soft circle */
+.student-greeting-top::after {
+  content: "";
+  position: absolute;
+  bottom: -35px;
+  left: -35px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255,255,255,0.035);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Left text block */
+.sd-welcome-text {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.sd-welcome-line {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.55);
+  margin: 0 0 4px;
+  letter-spacing: 0.2px;
+}
+
+.sd-student-name {
+  font-size: 2.1rem;
+  font-weight: 900;
+  margin: 0 0 5px;
+  background: linear-gradient(135deg, #fcd34d 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.sd-student-meta {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.48);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Illustration SVG */
+.sd-grad-svg {
+  width: 118px;
+  height: 108px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+}
+
+/* Logout button */
+.sd-logout-btn {
+  padding: 9px 18px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.8);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(8px);
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sd-logout-btn:hover {
+  background: rgba(239,68,68,0.18);
+  border-color: rgba(239,68,68,0.35);
+  color: #fca5a5;
+}
+
+/* ── Study Materials Banners ── */
+.study-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  background: linear-gradient(135deg, #581c87 0%, #7c3aed 55%, #9333ea 100%);
+  border: none;
+  border-radius: 22px;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 0.9rem;
+  transition: all 0.22s ease;
+  box-shadow: 0 6px 24px rgba(88,28,135,0.32);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.study-banner::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.study-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(88,28,135,0.42);
+}
+
+.study-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.study-banner-icon-wrap {
+  width: 52px;
+  height: 52px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.study-banner-label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 3px;
+}
+
+.study-banner-sub {
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.65);
+  margin: 0;
+}
+
+.study-banner-arrow {
+  color: rgba(255,255,255,0.6);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  transition: transform 0.18s;
+  position: relative;
+  z-index: 1;
+}
+
+.study-banner:hover .study-banner-arrow {
+  transform: translateX(5px);
+  color: #fbbf24;
+}
+
+/* Library banner — amber variant */
+.study-banner--library {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 40%, #d97706 100%);
+  box-shadow: 0 6px 24px rgba(146,64,14,0.32);
+}
+
+.study-banner--library:hover {
+  box-shadow: 0 12px 36px rgba(146,64,14,0.42);
+}
+
+.study-banner-icon-wrap--library {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ── Subject quick chips ── */
+.study-quick-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1.75rem;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.study-quick-row::-webkit-scrollbar { display: none; }
+
+.study-quick-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 15px;
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 148px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.study-quick-chip:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+.study-quick-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+.study-quick-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.study-quick-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.study-quick-count {
+  font-size: 0.68rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+.study-quick-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0,0,0,0.06);
+}
+
+.study-quick-progress-fill {
+  height: 100%;
+  border-radius: 0 2px 2px 0;
+  transition: width 0.5s ease;
+}
+
+/* ── Stats grid ── */
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Attendance ── */
+.class-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.class-subject {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+.att-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 0.5rem;
+}
+
+.att-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(124,58,237,0.12);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.att-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a855f7);
+  border-radius: 4px;
+  transition: width 0.7s cubic-bezier(0.4,0,0.2,1);
+}
+
+.att-bar-label {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #6d28d9;
+  min-width: 42px;
+  text-align: right;
+}
+
+.att-no-data {
+  font-size: 0.78rem;
+  color: #a1a1aa;
+  margin: 0.5rem 0 0;
+  font-style: italic;
+}
+
+/* ── Homework ── */
+.homework-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.homework-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+.homework-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #71717a;
+}
+
+.homework-due { color: #ef4444; font-weight: 600; }
+
+.homework-status {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: rgba(251,191,36,0.12);
+  color: #d97706;
+  border: 1px solid rgba(251,191,36,0.28);
+}
+
+/* ── Announcement ── */
+.announcement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.announcement-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+.announcement-body {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: #52525b;
+}
+
+.announcement-date {
+  font-size: 0.73rem;
+  color: #a1a1aa;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}

@@ -1,0 +1,134 @@
+.student-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.055);
+  border-radius: 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.student-card:hover {
+  border-color: #ddd6fe;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.08);
+  transform: translateY(-1px);
+}
+
+.student-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.student-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.student-card-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.student-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.77rem;
+  color: #71717a;
+  flex-wrap: wrap;
+}
+
+.student-card-username {
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.student-card-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #d1d5db;
+  flex-shrink: 0;
+}
+
+.student-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: rgba(139, 92, 246, 0.08);
+  color: #6d28d9;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px solid rgba(139, 92, 246, 0.14);
+  letter-spacing: 0.2px;
+}
+
+.student-card-date {
+  color: #a1a1aa;
+}
+
+/* Action buttons */
+.student-card-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.sc-btn {
+  height: 32px;
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+  background: #f5f3ff;
+  border-radius: 9px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  transition: all 0.18s ease;
+  color: #52525b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.sc-btn-label {
+  line-height: 1;
+}
+
+.sc-btn--view:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.25);
+  color: #2563eb;
+}
+
+.sc-btn--edit:hover {
+  background: rgba(251, 191, 36, 0.12);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: #b45309;
+}
+
+.sc-btn--delete {
+  padding: 0 9px;
+}
+
+.sc-btn--delete:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.25);
+  color: #dc2626;
+}

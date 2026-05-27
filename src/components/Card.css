@@ -1,0 +1,167 @@
+/* ════════════════
+   Nova Classes Cards
+════════════════ */
+.card {
+  position: relative;
+  border-radius: 24px;
+  padding: 1.4rem 1.5rem 1.3rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid rgba(255,255,255,0.7);
+  min-height: 180px;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+}
+
+/* Card top row */
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+
+.card-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border: 1px solid rgba(255,255,255,0.95);
+}
+
+.card-icon {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.card-menu-btn {
+  background: none;
+  border: none;
+  color: rgba(0,0,0,0.28);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.18s, background 0.18s;
+}
+
+.card-menu-btn:hover {
+  color: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.05);
+}
+
+/* SVG decoration area */
+.card-deco-area {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 200px;
+  height: 130px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-deco-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Card content */
+.card-content {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+}
+
+.card-value {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  line-height: 1.05;
+  margin-bottom: 0.15rem;
+  letter-spacing: -1px;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0;
+}
+
+.card-subtitle {
+  font-size: 0.78rem;
+  color: rgba(30,27,75,0.52);
+  margin: 0.15rem 0 0;
+}
+
+.card-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.75rem;
+  padding: 5px 11px;
+  border-radius: 20px;
+  font-size: 0.73rem;
+  font-weight: 700;
+}
+
+.card-trend.positive {
+  background: rgba(16,185,129,0.12);
+  color: #059669;
+}
+
+.card-trend.negative {
+  background: rgba(239,68,68,0.1);
+  color: #ef4444;
+}
+
+.trend-arrow { font-size: 0.8rem; }
+.trend-label {
+  color: rgba(30,27,75,0.45);
+  font-weight: 500;
+}
+
+/* ── Variant backgrounds ── */
+.card--purple {
+  background: linear-gradient(140deg, #f0ebff 0%, #e5d4ff 100%);
+}
+
+.card--blue {
+  background: linear-gradient(140deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.card--pink {
+  background: linear-gradient(140deg, #fffbeb 0%, #fde68a 100%);
+}
+
+.card--pink .card-value { color: #92400e; }
+
+.card--green {
+  background: linear-gradient(140deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.card--green .card-value { color: #166534; }
+
+.card--default {
+  background: #ffffff;
+}
+
+/* Card body (custom children slot) */
+.card-body {
+  margin-top: 0.75rem;
+}

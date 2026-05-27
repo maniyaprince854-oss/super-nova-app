@@ -1,0 +1,291 @@
+/* ═══════════════════════════
+   Auth pages — Login & Register
+═══════════════════════════ */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #150d2e;
+  background: radial-gradient(ellipse at 65% 25%, #3b0764 0%, #1e0a3c 45%, #0d0620 100%);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient gold glow in background */
+.auth-page::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.auth-page::after {
+  content: "";
+  position: absolute;
+  bottom: -80px;
+  left: -80px;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  background: #ffffff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 32px 90px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06);
+  animation: fadeUp 0.45s ease;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Hero section ── */
+.auth-card-hero {
+  background: radial-gradient(ellipse at 65% 20%, #4c1680 0%, #2d0a5e 45%, #150d2e 100%);
+  padding: 2.5rem 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold glow behind the bulb */
+.auth-card-hero::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 100px;
+  background: radial-gradient(ellipse, rgba(251,191,36,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* White wave at bottom of hero */
+.auth-card-hero::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background: #ffffff;
+  border-radius: 30px 30px 0 0;
+}
+
+.auth-hero-tagline {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  margin: 0;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Form body ── */
+.auth-card-body {
+  padding: 1.25rem 2rem 2.25rem;
+}
+
+.auth-form-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #1e1b4b;
+  margin: 0 0 4px;
+  letter-spacing: -0.3px;
+}
+
+.auth-form-sub {
+  font-size: 0.82rem;
+  color: #a1a1aa;
+  margin: 0 0 1.5rem;
+  font-weight: 500;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* ── Form elements ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #52525b;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.form-input {
+  padding: 12px 16px;
+  background: #f5f3ff;
+  border: 1.5px solid rgba(124,58,237,0.1);
+  border-radius: 12px;
+  color: #1e1b4b;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  font-weight: 500;
+}
+
+.form-input::placeholder { color: #c4b5fd; }
+
+.form-input:focus {
+  border-color: #7c3aed;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%239333ea' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.form-select option {
+  background: #ffffff;
+  color: #1e1b4b;
+}
+
+.form-error {
+  font-size: 0.8rem;
+  color: #ef4444;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 9px 14px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ── Submit button ── */
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #581c87, #7c3aed);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  margin-top: 4px;
+  box-shadow: 0 6px 24px rgba(88,28,135,0.4);
+}
+
+.auth-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #4c1680, #6b21a8);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 32px rgba(88,28,135,0.5);
+}
+
+.auth-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-loader {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Switch link ── */
+.auth-switch-link {
+  text-align: center;
+  font-size: 0.82rem;
+  color: #a1a1aa;
+  margin: 4px 0 0;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #7c3aed;
+  font-size: 0.82rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s;
+}
+
+.link-btn:hover { color: #581c87; }
+
+/* ── Success state ── */
+.register-success {
+  text-align: center;
+  padding: 1.5rem 0;
+  animation: fadeUp 0.4s ease;
+}
+
+.register-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(52,211,153,0.1);
+  border: 2px solid rgba(52,211,153,0.3);
+  font-size: 1.5rem;
+  color: #34d399;
+  margin-bottom: 1rem;
+}
+
+.register-success p {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0 0 0.4rem;
+}
+
+.register-redirect {
+  font-size: 0.78rem;
+  color: #a1a1aa;
+}

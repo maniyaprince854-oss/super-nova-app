@@ -1,0 +1,319 @@
+.students-toolbar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50px;
+  padding: 0 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-box:focus-within {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08);
+}
+
+.search-icon {
+  font-size: 0.9rem;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  color: #a1a1aa;
+}
+
+.search-input {
+  flex: 1;
+  padding: 11px 0;
+  background: transparent;
+  border: none;
+  color: #18181b;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #a1a1aa;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 0.8rem;
+  color: #52525b;
+  font-weight: 500;
+}
+
+.filter-select {
+  padding: 10px 32px 10px 14px;
+  background: #ffffff;
+  border: 1.5px solid rgba(0, 0, 0, 0.06);
+  border-radius: 50px;
+  color: #1e1b4b;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s;
+  font-weight: 500;
+}
+
+.filter-select:focus {
+  border-color: #c4b5fd;
+}
+
+/* Students list */
+.students-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.students-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem;
+  color: #a1a1aa;
+  gap: 0.75rem;
+  background: #ffffff;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.students-empty-icon {
+  font-size: 2.5rem;
+  opacity: 0.35;
+}
+
+.students-empty p {
+  font-size: 0.875rem;
+  margin: 0;
+  color: #a1a1aa;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 2rem;
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  animation: modalSlide 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-card--sm {
+  max-width: 400px;
+}
+
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: #f4f4f5;
+  border-radius: 8px;
+  color: #52525b;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s, color 0.18s;
+}
+
+.modal-close:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.modal-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0 0 1.5rem;
+}
+
+/* Profile in modal */
+.profile-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #6d28d9;
+  margin-bottom: 0.75rem;
+}
+
+.profile-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0 0 0.3rem;
+}
+
+.profile-meta {
+  font-size: 0.82rem;
+  color: #71717a;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-stat {
+  text-align: center;
+  padding: 1rem;
+  background: #f5f3ff;
+  border: 1.5px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+}
+
+.profile-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #6d28d9;
+  margin-bottom: 0.25rem;
+}
+
+.profile-stat-label {
+  font-size: 0.7rem;
+  color: #71717a;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.profile-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #52525b;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Form fields */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #52525b;
+  letter-spacing: 0.3px;
+}
+
+.form-input {
+  padding: 11px 14px;
+  border: 1.5px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #1e1b4b;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s;
+}
+
+.form-input:focus {
+  border-color: #c4b5fd;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.08);
+}
+
+.form-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2371717a' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.18s;
+}
+
+.register-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
