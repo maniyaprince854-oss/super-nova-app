@@ -1,4 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
+import AdminGuard from "./components/AdminGuard";
+import AdminLogin from "./pages/Admin/Login";
 import AdminDashboard from "./pages/Admin/Dashboard";
 import AdminStudents from "./pages/Admin/Students";
 import AdminAttendance from "./pages/Admin/Attendance";
@@ -14,15 +16,17 @@ import StudentStudyHub from "./pages/Student/StudyHub";
 
 const router = createBrowserRouter([
   { path: "/", element: <Navigate to="/student/register" replace /> },
-  // Admin routes
-  { path: "/admin",             element: <AdminDashboard /> },
-  { path: "/admin/students",    element: <AdminStudents /> },
-  { path: "/admin/attendance",  element: <AdminAttendance /> },
-  { path: "/admin/study",       element: <AdminStudyMaterials /> },
-  { path: "/admin/notes",       element: <AdminManageNotes /> },
-  { path: "/admin/reports",     element: <AdminReports /> },
-  { path: "/admin/messages",    element: <AdminMessages /> },
-  { path: "/admin/settings",    element: <Navigate to="/admin" replace /> },
+  // Admin auth
+  { path: "/admin/login", element: <AdminLogin /> },
+  // Admin protected routes
+  { path: "/admin",             element: <AdminGuard><AdminDashboard /></AdminGuard> },
+  { path: "/admin/students",    element: <AdminGuard><AdminStudents /></AdminGuard> },
+  { path: "/admin/attendance",  element: <AdminGuard><AdminAttendance /></AdminGuard> },
+  { path: "/admin/study",       element: <AdminGuard><AdminStudyMaterials /></AdminGuard> },
+  { path: "/admin/notes",       element: <AdminGuard><AdminManageNotes /></AdminGuard> },
+  { path: "/admin/reports",     element: <AdminGuard><AdminReports /></AdminGuard> },
+  { path: "/admin/messages",    element: <AdminGuard><AdminMessages /></AdminGuard> },
+  { path: "/admin/settings",    element: <AdminGuard><Navigate to="/admin" replace /></AdminGuard> },
   // Student routes
   { path: "/student",           element: <Navigate to="/student/register" replace /> },
   { path: "/student/register",  element: <StudentRegister /> },
