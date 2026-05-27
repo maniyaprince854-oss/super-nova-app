@@ -1,61 +1,80 @@
-/**
- * NOVA CLASSES — Classroom Server Launcher
- * Run: npm start
- *
- * 1. Builds the latest React app
- * 2. Starts Express on port 3000 serving everything
- * 3. Prints the URL — share it with students on the same Wi-Fi
- */
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 const path = require('path');
 const os   = require('os');
 
 const ROOT = path.join(__dirname, '..');
 
-/* ─── helpers ─── */
-function getLocalIP() {
+function getLanIP() {
   const nets = os.networkInterfaces();
+  const lan = [], other = [];
   for (const ifaces of Object.values(nets)) {
     for (const iface of ifaces) {
-      if (iface.family === 'IPv4' && !iface.internal) return iface.address;
+      if (iface.family !== 'IPv4' || iface.internal) continue;
+      const ip = iface.address;
+      if (ip.startsWith('192.168.') || ip.startsWith('10.') ||
+          /^172\.(1[6-9]|2\d|3[01])\./.test(ip)) {
+        lan.push(ip);
+      } else {
+        other.push(ip);
+      }
     }
   }
-  return 'localhost';
+  return (lan.length ? lan : other)[0] || 'localhost';
 }
 
-function line(char, width) { return char.repeat(width); }
-
-function box(rows, width = 56) {
-  const L = '║', TL = '╔', TR = '╗', BL = '╚', BR = '╝',
-        LM = '╠', RM = '╣', H = '═';
-  console.log(TL + line(H, width) + TR);
+function line(char, w) { return char.repeat(w); }
+function box(rows, w = 58) {
+  const H = '═', TL = '╔', TR = '╗', BL = '╚', BR = '╝', L = '║', LM = '╠', RM = '╣';
+  console.log(TL + line(H, w) + TR);
   rows.forEach(r => {
-    if (r === '---') { console.log(LM + line(H, width) + RM); return; }
-    const pad = width - 2 - r.length;
+    if (r === '---') { console.log(LM + line(H, w) + RM); return; }
+    const pad = w - 2 - r.length;
     console.log(L + ' ' + r + ' '.repeat(Math.max(0, pad)) + ' ' + L);
   });
-  console.log(BL + line(H, width) + BR);
+  console.log(BL + line(H, w) + BR);
 }
 
-/* ─── Step 1: Banner ─── */
+const PORT = process.env.PORT || '3000';
+
+/* ─── Banner ─── */
 console.clear();
 box(['', '  NOVA CLASSES — Classroom Server', '']);
 console.log('');
+
+/* ─── Step 1: Open Windows Firewall for port 3000 ─── */
+console.log('  [0/2]  Opening firewall for port ' + PORT + '...');
+try {
+  // Remove old rule first (ignore error if it doesn't exist)
+  spawnSync('netsh', ['advfirewall', 'firewall', 'delete', 'rule', 'name=Nova Classes'], { stdio: 'pipe' });
+  // Add fresh rule
+  const r = spawnSync('netsh', [
+    'advfirewall', 'firewall', 'add', 'rule',
+    'name=Nova Classes',
+    'dir=in', 'action=allow',
+    'protocol=TCP',
+    `localport=${PORT}`,
+  ], { stdio: 'pipe' });
+  if (r.status === 0) {
+    console.log('         Firewall port ' + PORT + ' opened — students on the same Wi-Fi can connect.\n');
+  } else {
+    console.log('         Could not open firewall automatically.\n');
+    console.log('  TIP:   If students cannot connect, close this window,\n         right-click CMD → "Run as administrator", then run npm start again.\n');
+  }
+} catch {
+  console.log('         Skipping firewall step (not on Windows or no permission).\n');
+}
 
 /* ─── Step 2: Build the frontend ─── */
 console.log('  [1/2]  Building the app...\n');
 try {
   execSync('npm run build', { cwd: ROOT, stdio: 'inherit' });
 } catch {
-  console.error('\n  ✖  Build failed. Fix errors above, then run npm start again.\n');
+  console.error('\n  ERROR: Build failed. Fix the errors above, then run npm start again.\n');
   process.exit(1);
 }
 
 /* ─── Step 3: Start the server ─── */
 console.log('\n  [2/2]  Starting server...\n');
+process.env.PORT = PORT;
 
-// Classroom mode: everything on port 3000
-process.env.PORT = process.env.PORT || '3000';
-
-// Hand off to server.js
 require('./server.js');
