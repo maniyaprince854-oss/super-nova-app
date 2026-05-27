@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   height: 66px;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255,255,255,0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid rgba(124,58,237,0.1);
@@ -15,6 +15,7 @@
   align-items: stretch;
   z-index: 100;
   box-shadow: 0 -6px 28px rgba(0,0,0,0.08), 0 -1px 0 rgba(124,58,237,0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .student-nav-item {
@@ -32,6 +33,8 @@
   transition: color 0.2s;
   position: relative;
   padding-top: 4px;
+  min-height: 56px;
+  touch-action: manipulation;
 }
 
 .student-nav-item.active {

@@ -1,0 +1,376 @@
+/* ══════════════════════════════════════════════
+   NOVA CLASSES — Global Responsive Styles
+   Primary target: iPad / Tablet (768–1059px)
+   Secondary: Desktop (≥1060px), Mobile (<768px)
+══════════════════════════════════════════════ */
+
+/* ── Touch-target minimum globally ── */
+button, [role="button"], a, select, input, textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+button { touch-action: manipulation; }
+
+/* ══════════════════════════
+   ADMIN LAYOUT
+══════════════════════════ */
+
+/* Admin main content — tighter padding on tablet */
+@media (max-width: 1059px) {
+  .admin-main {
+    padding: 0 1.25rem 2.5rem;
+  }
+  .admin-main-wrapper .header {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-layout {
+    /* On mobile the sidebar is fixed overlay, main takes full width */
+    display: block;
+  }
+  .admin-main {
+    padding: 0 1rem 2.5rem;
+  }
+}
+
+/* ══════════════════════════
+   ADMIN DASHBOARD — Stats / Grids
+══════════════════════════ */
+
+/* Tablet: 2-column stats grid */
+@media (max-width: 1059px) and (min-width: 768px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem;
+  }
+  .dashboard-bottom-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+  .analytics-summaries {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem;
+  }
+  .dashboard-bottom-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem;
+  }
+  .analytics-summaries {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Stats cards — bigger on tablet */
+@media (max-width: 1059px) {
+  .admin-main {
+    overflow-x: hidden;
+  }
+}
+
+/* ══════════════════════════
+   CARD COMPONENT
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .card { border-radius: 18px; }
+}
+
+/* ══════════════════════════
+   ADMIN STUDENTS PAGE
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .students-toolbar {
+    gap: 0.75rem;
+  }
+  .filter-group .filter-label {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .students-toolbar {
+    flex-direction: column;
+  }
+  .students-toolbar .search-box { min-width: unset; width: 100%; }
+  .filter-group { width: 100%; }
+  .filter-select { flex: 1; width: 100%; }
+}
+
+/* ══════════════════════════
+   ADMIN STUDY MATERIALS
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .sm-tab-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .sm-cards-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .sm-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══════════════════════════
+   ADMIN ATTENDANCE PAGE
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .attendance-grid,
+  .att-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══════════════════════════
+   ADMIN REPORTS PAGE
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .reports-grid,
+  .rpt-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══════════════════════════
+   ADMIN MESSAGES PAGE
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .messages-layout {
+    flex-direction: column !important;
+    height: auto !important;
+  }
+  .messages-sidebar {
+    width: 100% !important;
+    max-height: 280px;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+}
+
+/* ══════════════════════════
+   MANAGE NOTES PAGE
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .notes-grid,
+  .mn-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  }
+}
+
+/* ══════════════════════════
+   MODAL OVERLAYS (all pages)
+══════════════════════════ */
+@media (max-width: 1059px) {
+  .modal-card,
+  .modal-box,
+  .sm-modal,
+  .mn-modal {
+    max-width: calc(100vw - 2rem) !important;
+    margin: 1rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Bottom-sheet style modals on mobile */
+  .modal-overlay,
+  .sm-modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+  }
+  .modal-card,
+  .modal-box,
+  .sm-modal {
+    max-width: 100% !important;
+    width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    margin: 0 !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* ══════════════════════════
+   STUDENT LAYOUT
+══════════════════════════ */
+
+/* Student bottom nav — taller on iPad for easier touch */
+@media (min-width: 768px) {
+  .student-nav {
+    height: 74px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .student-nav-item {
+    gap: 5px;
+  }
+  .student-nav-label {
+    font-size: 0.72rem;
+  }
+  .student-main {
+    padding-bottom: 7.5rem !important;
+  }
+}
+
+/* Student pages — full width on tablet, max 1024px centered */
+@media (min-width: 768px) and (max-width: 1200px) {
+  .student-main {
+    max-width: 100% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+  .study-student-main {
+    max-width: 100% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+/* On iPad landscape, give more room */
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .student-main {
+    max-width: 880px !important;
+  }
+  .study-student-main {
+    max-width: 880px !important;
+  }
+}
+
+/* ══════════════════════════
+   STUDENT DASHBOARD CARDS
+══════════════════════════ */
+
+/* iPad: bigger welcome banner */
+@media (min-width: 768px) {
+  .student-greeting-top {
+    padding: 2rem 2rem;
+    min-height: 150px;
+  }
+  .sd-student-name {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* Study subject grid — 2 col on tablet, 3 col on landscape iPad */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .study-subject-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (min-width: 1024px) {
+  .study-subject-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ══════════════════════════
+   STUDENT STUDY PAGE CARDS
+══════════════════════════ */
+@media (min-width: 768px) {
+  /* Video cards bigger on iPad */
+  .study-lecture-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 1.25rem !important;
+  }
+  /* Scrollable rows wider */
+  .study-live-row,
+  .study-locked-row {
+    padding-bottom: 0.75rem;
+  }
+  /* Section headings more space */
+  .study-section-heading {
+    font-size: 1.1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .study-lecture-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ══════════════════════════
+   AUTH PAGES — iPad centered
+══════════════════════════ */
+@media (min-width: 768px) {
+  .auth-card {
+    max-width: 480px;
+  }
+  .auth-card-hero {
+    padding: 3rem 2.5rem 2.5rem;
+  }
+  .auth-card-body {
+    padding: 1.5rem 2.5rem 2.5rem;
+  }
+  .auth-form-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* ══════════════════════════
+   CARD GRID — StudyHub / Library
+══════════════════════════ */
+@media (min-width: 768px) {
+  .studyhub-grid,
+  .sh-grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  }
+}
+
+/* ══════════════════════════
+   GLOBAL: Better touch targets
+══════════════════════════ */
+@media (max-width: 1059px) {
+  /* Ensure all interactive items have adequate touch target */
+  .sidebar-link { min-height: 48px; }
+  .control-btn  { width: 46px; height: 46px; }
+  .auth-btn     { min-height: 52px; font-size: 1rem; }
+  .form-input, .form-select { padding: 13px 16px; font-size: 1rem; }
+  .filter-select { padding: 12px 32px 12px 14px; font-size: 0.9rem; }
+}
+
+/* ══════════════════════════
+   GLOBAL: iPad safe areas
+══════════════════════════ */
+@supports (padding: env(safe-area-inset-top)) {
+  .header {
+    padding-left: calc(1.75rem + env(safe-area-inset-left));
+    padding-right: calc(1.75rem + env(safe-area-inset-right));
+  }
+  .student-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+    height: calc(66px + env(safe-area-inset-bottom));
+  }
+  @media (min-width: 768px) {
+    .student-nav {
+      height: calc(74px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* ══════════════════════════
+   GLOBAL: Smooth scrolling & overscroll
+══════════════════════════ */
+.admin-main,
+.student-main,
+.study-student-main {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* ══════════════════════════
+   GLOBAL: Font scaling for iPad
+══════════════════════════ */
+@media (min-width: 768px) and (max-width: 1059px) {
+  html { font-size: 15.5px; }
+}
+@media (min-width: 1060px) {
+  html { font-size: 16px; }
+}
