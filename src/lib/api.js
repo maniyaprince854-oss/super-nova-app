@@ -123,3 +123,25 @@ export async function deleteNoteFromServer(id) {
     return false;
   }
 }
+
+/** Fetch all materials from the server (for fresh-device hydration) */
+export async function fetchMaterialsFromServer() {
+  try {
+    const res = await timed(fetch(backendUrl('/api/materials')));
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}
+
+/** Fetch all notes from the server (for fresh-device hydration) */
+export async function fetchNotesFromServer() {
+  try {
+    const res = await timed(fetch(backendUrl('/api/notes')));
+    if (!res.ok) return null;
+    return res.json();
+  } catch {
+    return null;
+  }
+}

@@ -4,6 +4,7 @@
   "version": "0.7.0",
   "type": "module",
   "scripts": {
+    "start": "node backend/start.js",
     "dev": "vite --host",
     "dev:server": "node backend/server.js",
     "dev:all": "concurrently -k -n VITE,SERVER -c cyan,green \"npm run dev\" \"npm run dev:server\"",

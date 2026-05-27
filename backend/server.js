@@ -91,15 +91,20 @@ const PORT = parseInt(process.env.PORT || '3001', 10);
 
 server.listen(PORT, '0.0.0.0', () => {
   const ip = getLocalIP();
-  console.log('\n╔══════════════════════════════════════════════════╗');
-  console.log('║   🟢  NOVA CLASSES — Local Sync Server           ║');
-  console.log('╠══════════════════════════════════════════════════╣');
-  console.log(`║  Admin:    http://${ip}:${PORT}/admin`.padEnd(51) + '║');
-  console.log(`║  Student:  http://${ip}:${PORT}/student`.padEnd(51) + '║');
-  console.log(`║  API:      http://${ip}:${PORT}/api`.padEnd(51) + '║');
-  console.log('╠══════════════════════════════════════════════════╣');
-  console.log('║  Share the Student URL with students on Wi-Fi    ║');
-  console.log('╚══════════════════════════════════════════════════╝\n');
+  const W  = 56;
+  function pad(str) { return str + ' '.repeat(Math.max(0, W - 2 - str.length)); }
+
+  console.log('\n╔' + '═'.repeat(W) + '╗');
+  console.log('║' + pad('  NOVA CLASSES — Classroom Server is LIVE') + ' ║');
+  console.log('╠' + '═'.repeat(W) + '╣');
+  console.log('║' + pad(`  Admin URL:   http://${ip}:${PORT}/admin`) + ' ║');
+  console.log('║' + pad(`  Student URL: http://${ip}:${PORT}/student`) + ' ║');
+  console.log('╠' + '═'.repeat(W) + '╣');
+  console.log('║' + pad('  Admin login:   admin  /  nova@123') + ' ║');
+  console.log('╠' + '═'.repeat(W) + '╣');
+  console.log('║' + pad('  Share the Student URL with students on Wi-Fi') + ' ║');
+  console.log('║' + pad('  Students just open it in their browser') + ' ║');
+  console.log('╚' + '═'.repeat(W) + '╝\n');
 });
 
 module.exports = { app, io };

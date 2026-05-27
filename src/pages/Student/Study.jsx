@@ -17,6 +17,7 @@ import { getUpcomingLiveClasses } from "../../database/liveClasses";
 import { getPersonalNote, savePersonalNote } from "../../database/personalNotes";
 import { PlayCircleIcon, FileTextIcon, BookOpenIcon, ChevronRightIcon, SearchIcon } from "../../components/Icons";
 import { getSocket } from "../../lib/socket";
+import { fetchMaterialsFromServer, fetchNotesFromServer } from "../../lib/api";
 import NetworkStatus from "../../components/NetworkStatus";
 import SyncToast from "../../components/SyncToast";
 import "./Study.css";
@@ -290,6 +291,50 @@ export default function StudentStudy() {
     reload(s);
     setStreakData(recordStudyDay(s.id));
   }, [navigate, reload]);
+
+  /* ── Server hydration: pull all existing materials on first load ── */
+  useEffect(() => {
+    async function hydrate() {
+      const [serverMaterials, serverNotes] = await Promise.all([
+        fetchMaterialsFromServer(),
+        fetchNotesFromServer(),
+      ]);
+
+      let changed = false;
+
+      if (Array.isArray(serverMaterials) && serverMaterials.length > 0) {
+        try {
+          const local = JSON.parse(localStorage.getItem(STUDY_KEY) || '[]');
+          const merged = [...local];
+          serverMaterials.forEach((m) => {
+            const idx = merged.findIndex((x) => x.id === m.id);
+            if (idx === -1) { merged.unshift(m); changed = true; }
+            else { merged[idx] = m; changed = true; }
+          });
+          localStorage.setItem(STUDY_KEY, JSON.stringify(merged));
+        } catch {}
+      }
+
+      if (Array.isArray(serverNotes) && serverNotes.length > 0) {
+        try {
+          const NOTES_KEY = 'nova_materials';
+          const local = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+          const merged = [...local];
+          serverNotes.forEach((n) => {
+            const idx = merged.findIndex((x) => x.id === n.id);
+            if (idx === -1) { merged.unshift(n); changed = true; }
+            else { merged[idx] = n; changed = true; }
+          });
+          localStorage.setItem(NOTES_KEY, JSON.stringify(merged));
+        } catch {}
+      }
+
+      if (changed) {
+        setStudent((s) => { if (s) reload(s); return s; });
+      }
+    }
+    hydrate();
+  }, [reload]);
 
   /* ── Live sync: receive new materials from admin ── */
   useEffect(() => {
