@@ -371,14 +371,37 @@ export default function StudentStudy() {
       setStudent((s) => { if (s) reload(s); return s; });
     }
 
+    function onNoteAdded(note) {
+      try {
+        const all = JSON.parse(localStorage.getItem('nova_materials') || '[]');
+        if (!all.find((n) => n.id === note.id)) {
+          all.unshift(note);
+          localStorage.setItem('nova_materials', JSON.stringify(all));
+        }
+      } catch {}
+      setStudent((s) => { if (s) reload(s); return s; });
+    }
+
+    function onNoteDeleted({ id }) {
+      try {
+        const all = JSON.parse(localStorage.getItem('nova_materials') || '[]');
+        localStorage.setItem('nova_materials', JSON.stringify(all.filter((n) => n.id !== id)));
+      } catch {}
+      setStudent((s) => { if (s) reload(s); return s; });
+    }
+
     socket.on('material:added',   onMaterialAdded);
     socket.on('material:updated', onMaterialUpdated);
     socket.on('material:deleted', onMaterialDeleted);
+    socket.on('note:added',       onNoteAdded);
+    socket.on('note:deleted',     onNoteDeleted);
 
     return () => {
       socket.off('material:added',   onMaterialAdded);
       socket.off('material:updated', onMaterialUpdated);
       socket.off('material:deleted', onMaterialDeleted);
+      socket.off('note:added',       onNoteAdded);
+      socket.off('note:deleted',     onNoteDeleted);
     };
   }, [reload]);
 

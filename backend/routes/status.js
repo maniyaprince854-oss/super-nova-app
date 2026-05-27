@@ -4,12 +4,21 @@ const os      = require('os');
 
 function getLocalIP() {
   const nets = os.networkInterfaces();
+  const lan = [], other = [];
   for (const ifaces of Object.values(nets)) {
     for (const iface of ifaces) {
-      if (iface.family === 'IPv4' && !iface.internal) return iface.address;
+      if (iface.family !== 'IPv4' || iface.internal) continue;
+      const ip = iface.address;
+      if (ip.startsWith('192.168.') || ip.startsWith('10.') ||
+          /^172\.(1[6-9]|2\d|3[01])\./.test(ip)) {
+        lan.push(ip);
+      } else {
+        other.push(ip);
+      }
     }
   }
-  return 'localhost';
+  const all = lan.length ? lan : other;
+  return all[0] || 'localhost';
 }
 
 router.get('/', (req, res) => {
