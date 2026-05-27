@@ -75,23 +75,42 @@ if (fs.existsSync(DIST_DIR)) {
   });
 }
 
-/* ── Find local IPv4 address ── */
-function getLocalIP() {
+/* ── Find local IPv4 address (prefer LAN ranges over VPN) ── */
+function getAllLocalIPs() {
   const nets = os.networkInterfaces();
+  const lan = [], other = [];
   for (const ifaces of Object.values(nets)) {
     for (const iface of ifaces) {
-      if (iface.family === 'IPv4' && !iface.internal) return iface.address;
+      if (iface.family !== 'IPv4' || iface.internal) continue;
+      const ip = iface.address;
+      if (ip.startsWith('192.168.') || ip.startsWith('10.') ||
+          /^172\.(1[6-9]|2\d|3[01])\./.test(ip)) {
+        lan.push(ip);
+      } else {
+        other.push(ip);
+      }
     }
   }
-  return 'localhost';
+  return lan.length ? lan : other;
 }
 
 /* ── Start ── */
 const PORT = parseInt(process.env.PORT || '3001', 10);
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`\n  ERROR: Port ${PORT} is already in use.`);
+    console.error(`  Another copy of the server is already running.`);
+    console.error(`  Close it first, then run npm start again.\n`);
+    process.exit(1);
+  }
+  throw err;
+});
+
 server.listen(PORT, '0.0.0.0', () => {
-  const ip = getLocalIP();
-  const W  = 56;
+  const ips = getAllLocalIPs();
+  const ip  = ips[0] || 'localhost';
+  const W   = 58;
   function pad(str) { return str + ' '.repeat(Math.max(0, W - 2 - str.length)); }
 
   console.log('\n╔' + '═'.repeat(W) + '╗');
@@ -99,6 +118,11 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log('╠' + '═'.repeat(W) + '╣');
   console.log('║' + pad(`  Admin URL:   http://${ip}:${PORT}/admin`) + ' ║');
   console.log('║' + pad(`  Student URL: http://${ip}:${PORT}/student`) + ' ║');
+  if (ips.length > 1) {
+    ips.slice(1).forEach(extra =>
+      console.log('║' + pad(`  Alt URL:     http://${extra}:${PORT}/student`) + ' ║')
+    );
+  }
   console.log('╠' + '═'.repeat(W) + '╣');
   console.log('║' + pad('  Admin login:   admin  /  nova@123') + ' ║');
   console.log('╠' + '═'.repeat(W) + '╣');
