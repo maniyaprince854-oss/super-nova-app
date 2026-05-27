@@ -273,14 +273,14 @@ export default function StudentStudy() {
     setAllNotes(notes);
     setBookmarkedNoteIds(getBookmarkIds(s.id));
     const visNotes = notes.filter((n) => !n.visibility || n.visibility === "all" || n.visibility === s.class);
-    const visVids  = all.filter((m) => m.class === s.class);
+    const visVids  = all.filter((m) => !m.class || m.class === s.class || m.class.toLowerCase() === "all");
     const combined = [
       ...visVids.map((m) => ({ ...m, _type: "video", _title: m.lectureTitle })),
       ...visNotes.map((n) => ({ ...n, _type: "note",  _title: n.title })),
     ].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 6);
     setRecentlyAdded(combined);
     setLiveClasses(getUpcomingLiveClasses(s.class));
-    setScheduledItems(getScheduledMaterials().filter((m) => m.class === s.class || m.visibility === "all"));
+    setScheduledItems(getScheduledMaterials().filter((m) => !m.class || m.class === s.class || m.class.toLowerCase() === "all" || m.visibility === "all"));
   }, []);
 
   useEffect(() => {
@@ -409,7 +409,9 @@ export default function StudentStudy() {
 
   /* ── Computed values ── */
   const visibleMaterials = materials.filter((m) => {
-    const classOk  = classFilter === "mine" ? m.class === student.class : true;
+    const classOk  = classFilter === "mine"
+      ? (!m.class || m.class === student.class || m.class.toLowerCase() === "all")
+      : true;
     const searchOk = !search.trim() ||
       m.lectureTitle.toLowerCase().includes(search.toLowerCase()) ||
       m.chapter.toLowerCase().includes(search.toLowerCase()) ||
@@ -445,11 +447,18 @@ export default function StudentStudy() {
   async function openNote(note) {
     if (note.fileId) {
       const url = await getFileBlobUrl(note.fileId);
-      if (url) setPdfViewer({ viewerUrl: url, directUrl: null, title: note.title, chapter: note.chapter, materialType: note.materialType, noteId: note.id });
-      return;
+      if (url) {
+        setPdfViewer({ viewerUrl: url, directUrl: null, title: note.title, chapter: note.chapter, materialType: note.materialType, noteId: note.id });
+        return;
+      }
+      // fileId blob not found on this device — fall through to server URL
     }
     if (note.pdfUrl) {
-      setPdfViewer({ viewerUrl: getPdfViewerUrl(note.pdfUrl), directUrl: note.pdfUrl, title: note.title, chapter: note.chapter, materialType: note.materialType, noteId: note.id });
+      // Server-uploaded files (/uploads/...) — serve directly via Express
+      // External URLs — use Google Docs viewer
+      const isServerFile = note.pdfUrl.startsWith('/uploads/');
+      const viewerUrl = isServerFile ? note.pdfUrl : getPdfViewerUrl(note.pdfUrl);
+      setPdfViewer({ viewerUrl, directUrl: note.pdfUrl, title: note.title, chapter: note.chapter, materialType: note.materialType, noteId: note.id });
     }
   }
 

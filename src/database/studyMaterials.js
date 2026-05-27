@@ -3,7 +3,7 @@ const PROGRESS_KEY = "nova_study_progress";
 const RECENT_KEY   = "nova_study_recent";
 
 export const SUBJECTS      = ["Math", "Science", "English", "Social Science"];
-export const STUDY_CLASSES = ["9th", "10th"];
+export const STUDY_CLASSES = ["9th", "10th", "11th", "12th"];
 export const CONTENT_TYPES = ["YouTube Video", "PDF Notes", "Combined"];
 
 /* ── Materials ── */
