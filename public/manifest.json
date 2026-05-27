@@ -1,0 +1,19 @@
+{
+  "name": "Nova Classes",
+  "short_name": "Nova",
+  "description": "Student & Admin Dashboard — Nova Classes",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1e0a3c",
+  "theme_color": "#3b0764",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
